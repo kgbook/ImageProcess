@@ -2,4 +2,4 @@ AR := ar
 CC := cc
 
 PUB_INC_DIR =  $(WTD_PROJECT)/inc  
-#PUB_LIB_DIR =  $(WTD_PROJECT)/lib 
+#PUB_LIB_DIR =  $(WTD_PROJECT)/lib

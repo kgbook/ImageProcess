@@ -2,7 +2,7 @@
 WTD_PROJECT = ..
 include $(WTD_PROJECT)/config.local
 
-TARGET = png_test
+TARGET = splice_tool
 SRCS    = $(wildcard *.c)
 OBJS    = $(SRCS:.c=.o)
 
@@ -17,9 +17,10 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(LIBS) -o $@ $^ \
 		# -Wl,-gc-sections  ##OSX gcc not support -gc-sections
+	mv $(TARGET) $(WTD_PROJECT)
 	
 %.o: %.c
 	$(CC) $(INCLUDE) $(CFLAGS) -c -fpic -Wall $< 
 clean:
-	rm -f $(OBJS)  $(TARGET)
+	rm -f $(OBJS)  $(WTD_PROJECT)/$(TARGET)
 

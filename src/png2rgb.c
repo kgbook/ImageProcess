@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "png.h"
-#include "png_test.h"
+#include "png_splice.h"
 
-KG_U32 png_get_data(PNG_S_DIM *pstDim, KG_CHAR **ppData, KG_CHAR *pszPath)
+KG_U32 png_to_rgba32(PNG_S_DATA *pstData, KG_CHAR *pszPath)
 {
 	KG_BOOL bIsPng;
 	KG_U8 acHeader[PNG_HEADER_LEN];
@@ -18,7 +18,7 @@ KG_U32 png_get_data(PNG_S_DIM *pstDim, KG_CHAR **ppData, KG_CHAR *pszPath)
 	KG_U8 u8ColorType, u8BytePerPixel;
 	KG_CHAR *pData;
 
-	if ((KG_NULL == pstDim) || (1 > strlen(pszPath)))
+	if ((NULL == pstData) || (1 > strlen(pszPath)))
 	{
 		print_err("error param.\n");
 		return KG_FAILURE;
@@ -26,7 +26,7 @@ KG_U32 png_get_data(PNG_S_DIM *pstDim, KG_CHAR **ppData, KG_CHAR *pszPath)
 
 	print_debug("pszPath:%s", pszPath);
 
-	if(KG_NULL == (fpIn = fopen(pszPath, "rb" )) )
+	if(NULL == (fpIn = fopen(pszPath, "rb" )) )
 	{
 		print_err("failed when fopen().");
 		return KG_FAILURE;
@@ -34,21 +34,21 @@ KG_U32 png_get_data(PNG_S_DIM *pstDim, KG_CHAR **ppData, KG_CHAR *pszPath)
 
 	memset(acHeader, 0, sizeof(acHeader));
 	fread(acHeader, 1, PNG_HEADER_LEN, fpIn);
-	bIsPng = !png_sig_cmp(acHeader, 0, PNG_HEADER_LEN);
-
+	
+    bIsPng = !png_sig_cmp(acHeader, 0, PNG_HEADER_LEN);
 	if (!bIsPng)
 	{
 		print_err("only png file supported!");
 		return KG_FAILURE;
 	}
 
-	if (KG_NULL == (read_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL)))
+	if (NULL == (read_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL)))
 	{
 		print_err("failed when png_create_read_struct().");
 		return KG_FAILURE;
 	}
 
-	if (KG_NULL == (read_info_ptr = png_create_info_struct(read_ptr)))
+	if (NULL == (read_info_ptr = png_create_info_struct(read_ptr)))
 	{
 		print_err("failed when png_create_info_struct().");
 		png_destroy_read_struct(&read_ptr, (png_infopp)NULL, (png_infopp)NULL);
@@ -94,79 +94,10 @@ KG_U32 png_get_data(PNG_S_DIM *pstDim, KG_CHAR **ppData, KG_CHAR *pszPath)
 
 	png_destroy_read_struct(&read_ptr, &read_info_ptr, (png_infopp)NULL);
 
-	pstDim->u32Width = u32Width;
-	pstDim->u32Height = u32Height;
-	pstDim->u32Len = u32Len;
-	*ppData = pData;
+	pstData->u32Width = u32Width;
+	pstData->u32Height = u32Height;
+	pstData->u32Len = u32Len;
+	pstData->pscAddr = pData;
 
 	return KG_SUCCESS;
 }
-
-#if 1
-KG_S32 main(KG_S32 argc, KG_CHAR **argv)
-{
-	KG_U32 u32Index;
-	KG_CHAR *acFilename, *auImgData;
-	PNG_S_DIM stDim;
-	FILE *fpHeader, *fpBin, *fpRgb;
-
-	if ((argc < 2) || (1 > strlen(argv[1])))
-	{
-		print_err("error param.\n");
-		return KG_FAILURE;
-	}
-
-	if ((KG_NULL == (fpHeader = fopen("header.txt", "w")))
-			|| (KG_NULL == (fpBin = fopen("bin.txt", "w")))
-			|| (KG_NULL == (fpRgb = fopen("png.rgb8888", "w"))))
-	{
-		print_err("failed when fopen().");
-		return KG_FAILURE;
-	}
-
-	acFilename = argv[1];	
-	memset(&stDim, 0, sizeof(stDim));
-	
-	if (KG_SUCCESS != png_get_data(&stDim, &auImgData, acFilename))
-	{
-		print_err("failed when png_get_data!");
-		return KG_FAILURE;
-	}
-
-	for (u32Index = 0; u32Index < stDim.u32Len; u32Index++)
-	{
-		fprintf(fpBin, "%3u, ", auImgData[u32Index]);
-
-		if (0 == ((u32Index + 1) % 0x10))
-		{
-			fprintf(fpBin, "\n");
-		}
-	}
-
-	fprintf(fpHeader, "width = %u\n", stDim.u32Width);
-	fprintf(fpHeader, "height = %u\n", stDim.u32Height);
-	fprintf(fpHeader, "len = %u\n", stDim.u32Len);
-
-	fwrite(auImgData, 1, stDim.u32Len, fpRgb);
-
-	if (NULL != fpBin)
-	{
-		fclose(fpBin);
-		fpBin = NULL;
-	}
-
-	if (NULL != fpHeader)
-	{
-		fclose(fpHeader);
-		fpHeader = NULL;
-	}
-
-	if (NULL != fpRgb)
-	{
-		fclose(fpRgb);
-		fpRgb = NULL;
-	}
-	
-	return KG_SUCCESS;
-}
-#endif
