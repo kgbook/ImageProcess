@@ -48,7 +48,6 @@ typedef struct
 #endif
 
 #define 			PNG_HEADER_LEN					(8)
-#define				PNG_MAX_NUM						(0x10)
 
 #define				PNG_RES_PATH					"./res"
 

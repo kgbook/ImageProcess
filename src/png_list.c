@@ -20,7 +20,7 @@ KG_S32 png_list_query(PNG_S_MOD *pstMod)
         pstData = &pstItem->stData;
         print_info("Token:%c, width:%u, height:%u, len:%u", pstData->scToken, pstData->u32Width, pstData->u32Height, pstData->u32Len);
     }
-    print_info("total:%u", pstMod->u32Cnt);
+    print_info("total:%u\n", pstMod->u32Cnt);
 
     return KG_SUCCESS;
 }
@@ -41,7 +41,7 @@ KG_S32 png_list_insert(PNG_S_MOD *pstMod, PNG_S_DATA *pstData)
     memcpy(&pstNode->stData, pstData, sizeof(PNG_S_DATA));
 
     pstHead = &pstMod->stList;
-    LIST_ADD_AFTER(pstNode, pstHead->next);
+    LIST_ADD_AFTER(pstNode, pstHead);
     pstMod->u32Cnt++;
 
     return KG_SUCCESS;
@@ -99,6 +99,7 @@ KG_S32 png_list_init(PNG_S_MOD *pstMod)
 KG_S32 png_list_deinit(PNG_S_MOD *pstMod)
 {
     PNG_S_NODE *pstItem = NULL;
+    PNG_S_NODE *pstTmp = NULL;
     PNG_S_NODE *pstHead = NULL;
     PNG_S_DATA *pstData = NULL;
     KG_CHAR *pcRgbaBuf = NULL;
@@ -106,7 +107,7 @@ KG_S32 png_list_deinit(PNG_S_MOD *pstMod)
     KG_ASSERT_RET(NULL != pstMod, KG_FAILURE);
     
     pstHead = &pstMod->stList;
-    FOR_EACH_LIST_ITEM(pstItem, pstHead)
+    FOR_EACH_LIST_ITEM_SAFE(pstItem, pstTmp, pstHead)
     {
         pstData = &pstItem->stData;
         pcRgbaBuf = pstData->pscAddr;

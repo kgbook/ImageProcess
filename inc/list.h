@@ -18,7 +18,7 @@ extern "C" {
 #define FOR_EACH_LIST_ITEM_SAFE(pstItem, pstTemp, pstHead) \
     for( (pstItem) = (pstHead)->next, (pstTemp) = (pstItem)->next; \
         (pstItem) != (pstHead); \
-            pstItem) = (pstTemp), (pstTemp) = (pstItem)->next )
+            (pstItem) = (pstTemp), (pstTemp) = (pstItem)->next )
 
 #define FOR_EACH_LIST_ITEM_INVERT_SAFE(pstItem, pstTemp, pstHead) \
     for( (pstItem) = (pstHead)->prev, (pstTemp) = (pstItem)->prev; \

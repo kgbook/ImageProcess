@@ -2,7 +2,7 @@
 WTD_PROJECT = ..
 include $(WTD_PROJECT)/config.local
 
-TARGET = splice_tool
+TARGET = splice_tool.app
 SRCS    = $(wildcard *.c)
 OBJS    = $(SRCS:.c=.o)
 

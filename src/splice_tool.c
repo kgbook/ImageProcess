@@ -6,7 +6,7 @@
 #include "png_list.h"
 #include "backtrace.h"
 
-static PNG_S_DATA m_stImg[PNG_MAX_NUM] = {
+static PNG_S_DATA m_stImg[] = {
     {.acPath = PNG_RES_PATH"/0.png", .scToken = '0'},
     {.acPath = PNG_RES_PATH"/1.png", .scToken = '1'},
     {.acPath = PNG_RES_PATH"/2.png", .scToken = '2'},
@@ -26,7 +26,7 @@ KG_S32 main(KG_S32 argc, KG_CHAR **argv)
     PNG_S_MOD stMod;
     KG_U32 u32Index;
     KG_S32 s32Ret;
-	FILE *fpRgb = NULL;
+	//FILE *fpRgb = NULL;
     struct sigaction stSigAction;
 
     stSigAction.sa_flags = SA_SIGINFO;
@@ -50,21 +50,24 @@ KG_S32 main(KG_S32 argc, KG_CHAR **argv)
             print_err("%s parse failed!", m_stImg[u32Index].acPath);
             return KG_FAILURE;
         }
+
+        s32Ret = png_list_query(&stMod);
+        KG_ASSERT_RET(KG_SUCCESS == s32Ret, KG_FAILURE);
     }
 
     s32Ret = png_list_query(&stMod);
     KG_ASSERT_RET(KG_SUCCESS == s32Ret, KG_FAILURE);
 
     s32Ret = png_list_deinit(&stMod);
-    KG_ASSERT_RET(KG_SUCCESS != s32Ret, KG_FAILURE);
+    KG_ASSERT_RET(KG_SUCCESS == s32Ret, KG_FAILURE);
 
+#if 0
 	if (NULL == (fpRgb = fopen("png.rgb8888", "w")))
 	{
 		print_err("failed when fopen().");
 		return KG_FAILURE;
 	}
 
-#if 0
 	acFilename = argv[1];	
 	memset(&m_stImg[u32Index].pscAddr, 0, sizeof(m_stImg[u32Index].pscAddr));
 
