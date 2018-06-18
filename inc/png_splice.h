@@ -63,7 +63,7 @@ do\
 }while(0)
 
 
-KG_U32 png_to_rgba32(PNG_S_DATA *pstData, KG_CHAR *pszPath);
+KG_S32 png_to_rgba32(PNG_S_DATA *pstData, KG_CHAR *pszPath);
 
 #ifdef __cplusplus
 #if __cplusplus

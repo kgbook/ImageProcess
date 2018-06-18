@@ -4,7 +4,7 @@
 #include "png.h"
 #include "png_splice.h"
 
-KG_U32 png_to_rgba32(PNG_S_DATA *pstData, KG_CHAR *pszPath)
+KG_S32 png_to_rgba32(PNG_S_DATA *pstData, KG_CHAR *pszPath)
 {
 	KG_BOOL bIsPng;
 	KG_U8 acHeader[PNG_HEADER_LEN];
