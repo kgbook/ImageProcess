@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e1c5d6faee9394b9a9a0655431b999ee43736d2f
 # Prerequisites
 *.d
 
@@ -54,10 +50,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-<<<<<<< HEAD
-=======
-*.o
-*.app
->>>>>>> resolve segfault
-=======
->>>>>>> e1c5d6faee9394b9a9a0655431b999ee43736d2f
