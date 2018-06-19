@@ -32,7 +32,7 @@ make && make install
 git clone https://github.com/kgbook/ImageSplice.git .
 cd ImageSplice
 make clean all version=debug
-./splice_tool.app
+out/splice_tool.app
 ```
 
 `out.rgba32` is the output filename, only support ouput rgba8888 format now.
