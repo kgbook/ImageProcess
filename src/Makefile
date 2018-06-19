@@ -23,4 +23,5 @@ $(TARGET): $(OBJS)
 	$(CC) $(INCLUDE) $(CFLAGS) -c -fpic -Wall $< 
 clean:
 	rm -f $(OBJS)  $(WTD_PROJECT)/$(TARGET)
+	rm -f *.rgba32
 

@@ -4,7 +4,7 @@
 #include "typedefs.h"
 #include "png_splice.h"
 #include "png_list.h"
-#include "list.h"
+#include "list_api.h"
 
 KG_S32 png_list_query(PNG_S_MOD *pstMod)
 {

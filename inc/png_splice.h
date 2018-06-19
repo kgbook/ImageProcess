@@ -32,11 +32,15 @@ typedef struct
     KG_U32 u32Cnt;
 }PNG_S_MOD;
 
-//#define				PRINT_DEBUG
-#define					PRINT_INFO
+#define              KB	        (1<<10)
+#define	             MB         (1<<20)
+#define              GB         (1<<30)
+
+//#define			PRINT_DEBUG
+#define				PRINT_INFO
 
 #ifdef				PRINT_DEBUG
-	#define 		print_debug(format, args...)			printf("[debug][%s:%d]"format"\n", __func__, __LINE__, ##args);
+	#define 		print_debug(format, args...)		printf("[debug][%s:%d]"format"\n", __func__, __LINE__, ##args);
 #else
 	#define			print_debug(format, args...)
 #endif
@@ -47,9 +51,9 @@ typedef struct
 	#define			print_info(format, args...)
 #endif
 
-#define 			PNG_HEADER_LEN					(8)
+#define 			PNG_HEADER_LEN					    (8)
 
-#define				PNG_RES_PATH					"./res"
+#define				PNG_RES_PATH					    "./res"
 
 #define				SAFE_FREE(ptr)\
 do\
@@ -61,8 +65,30 @@ do\
 	}\
 }while(0)
 
+#define				SAFE_FCLOSE(fp)\
+do\
+{\
+    if (NULL != fp)\
+    {\
+        fclose(fp);\
+        fp = NULL;\
+    }\
+}while(0)
+
+#define				SAFE_CLOSE(fd)\
+do\
+{\
+    if (fd >= 0)\
+    {\
+        close(fp);\
+        fd = -1;\
+    }\
+}while(0)
+
+#define    MAX(a, b)    ((a) >= (b) ? (a) : (b))
 
 KG_S32 png_to_rgba32(PNG_S_DATA *pstData, KG_CHAR *pszPath);
+KG_S32 rgba32_splice(PNG_S_MOD *pstMod, KG_CHAR *acStr, KG_CHAR *acOutBuf, KG_S32 *ps32Len);
 
 #ifdef __cplusplus
 #if __cplusplus
