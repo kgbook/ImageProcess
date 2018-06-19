@@ -28,10 +28,14 @@ make && make install
 ```
 
 ## Compile,  Install and Run
+
 ```
 git clone https://github.com/kgbook/ImageSplice.git .
+
 cd ImageSplice
+
 make clean all version=debug
+
 out/splice_tool.app
 ```
 
