@@ -37,4 +37,4 @@ make clean all version=debug
 
 `out.rgba32` is the output filename, only support ouput rgba8888 format now.
 
-![out.rgba32](https://github.com/kgbook/ImageSplice/blob/master/res/0.png "out.rgba32")
+![out.rgba32](https://github.com/kgbook/ImageSplice/blob/master/out/out-rgba32.png "out.rgba32")
