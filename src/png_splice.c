@@ -130,7 +130,7 @@ KG_S32 png_to_rgba32(PNG_S_DATA *pstData, KG_CHAR *pszPath)
 
 	memset(acHeader, 0, sizeof(acHeader));
 	fread(acHeader, 1, PNG_HEADER_LEN, fpIn);
-	
+    
     bIsPng = !png_sig_cmp(acHeader, 0, PNG_HEADER_LEN);
 	if (!bIsPng)
 	{
