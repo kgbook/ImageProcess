@@ -17,7 +17,7 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(LIBS) -o $@ $^ \
 		# -Wl,-gc-sections  ##OSX gcc not support -gc-sections
-	mv $(TARGET) $(WTD_PROJECT)
+	mv $(TARGET) $(WTD_PROJECT)/out
 	
 %.o: %.c
 	$(CC) $(INCLUDE) $(CFLAGS) -c -fpic -Wall $< 

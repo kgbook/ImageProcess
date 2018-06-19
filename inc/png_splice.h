@@ -53,7 +53,7 @@ typedef struct
 
 #define 			PNG_HEADER_LEN					    (8)
 
-#define				PNG_RES_PATH					    "./res"
+#define				PNG_RES_PATH					    "../res"
 
 #define				SAFE_FREE(ptr)\
 do\
