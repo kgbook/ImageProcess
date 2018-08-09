@@ -27,7 +27,7 @@ tar -xzvf libpng-1.6.34.tar.gz
 make && make install
 ```
 
-## Compile,  Install and Run
+## Build ##
 
 ```
 git clone https://github.com/kgbook/ImageSplice.git
